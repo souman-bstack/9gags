@@ -5,7 +5,7 @@ class Gag(mongoengine.Document):
     """Gag details are stored here"""
     content_type = mongoengine.StringField(required=True)
     url = mongoengine.StringField(required=True)
-    created_at = mongoengine.DateTimeField(default=datetime.datetime.now)
+    updated_at = mongoengine.DateTimeField(default=datetime.datetime.now)
     tags = mongoengine.StringField()
 
     def save_gags(gags):
@@ -18,6 +18,9 @@ class Gag(mongoengine.Document):
                     gag_tags.append(tag['key'])
                 newGag = Gag(content_type=gag['type'], url=gag['url'], tags=', '.join(gag_tags))
                 newGag.save()
+            else:
+                existing_gag.updated_at = datetime.datetime.now
+                existing_gag.save()
 
     def get_gags(type, count):
         input_mapping = dict({'IMAGE': 'Photo', 'GIF': 'Animated', 'VIDEO':'EmbedVideo'})
@@ -26,8 +29,8 @@ class Gag(mongoengine.Document):
             raise Exception("Count should be positive")
         if type in input_mapping.keys():
             object_type = input_mapping[type]
-            gags = Gag.objects(content_type=object_type).order_by('created_at')[:count]
+            gags = Gag.objects(content_type=object_type).order_by('-updated_at')[:count]
         else:
-            gags = Gag.objects().order_by('created_at')[:count]
+            gags = Gag.objects().order_by('-updated_at')[:count]
         for gag in gags:
             print(gag.url, gag.tags)
