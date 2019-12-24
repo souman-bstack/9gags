@@ -10,7 +10,7 @@ def main():
         except:
             print("Please provide correct no of arguments")
         init.init_all()
-        if intent=='scrap':
+        if intent == 'scrap':
             scraper.scrap_gags()
         else:
             try:

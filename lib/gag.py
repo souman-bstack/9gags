@@ -21,7 +21,7 @@ class Gag(mongoengine.Document):
 
     def get_gags(type, count):
         input_mapping = dict({'IMAGE': 'Photo', 'GIF': 'Animated', 'VIDEO':'EmbedVideo'})
-        if count<=0:
+        if count <= 0:
             print("Count should be positive")
             raise Exception("Count should be positive")
         if type in input_mapping.keys():
