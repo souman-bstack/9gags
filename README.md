@@ -25,7 +25,7 @@ Let's say the output is *python3_path* and home directory path of the 9gags webs
 `$ crontab -e`
 
 - Add the following line
-`10 * * * * cd 9gags_home && python3_path nine_gag.py scrap`
+`*/10 * * * * cd 9gags_home && python3_path nine_gag.py scrap`
 
 ### Getting the results
 - While in 9gags home directory. Run the command to get the output
