@@ -24,13 +24,17 @@ class Gag(mongoengine.Document):
 
     def get_gags(type, count):
         input_mapping = dict({'IMAGE': 'Photo', 'GIF': 'Animated', 'VIDEO':'EmbedVideo'})
+        gags = None
         if count <= 0:
             print("Count should be positive")
             raise Exception("Count should be positive")
         if type in input_mapping.keys():
             object_type = input_mapping[type]
             gags = Gag.objects(content_type=object_type).order_by('-updated_at')[:count]
-        else:
+        elif type == "OVERALL":
             gags = Gag.objects().order_by('-updated_at')[:count]
-        for gag in gags:
-            print(gag.url, gag.tags)
+        if gags == None:
+            print("Enter valid gag type")
+        else:
+            for gag in gags:
+                print(gag.url, gag.tags)

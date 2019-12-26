@@ -17,7 +17,7 @@ def main():
                 object_count = int(sys.argv[2])
                 Gag.get_gags(sys.argv[1], object_count)
             except:
-                print("Count of object should be integer")
+                print("Count of objects should be integer")
     except:
       print("An error has occured")
 
